@@ -1,6 +1,6 @@
-// Собирает src/App.jsx + src/style.css в один статический index.html
+// Собирает src/App.jsx + src/style.css в один статический dist/index.html
 import { buildSync, transformSync } from "esbuild";
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 
 const js = buildSync({
   entryPoints: ["src/App.jsx"],
@@ -13,8 +13,9 @@ const js = buildSync({
 }).outputFiles[0].text;
 const css = transformSync(readFileSync("src/style.css", "utf8"), { loader: "css", minify: true, charset: "utf8" }).code;
 
+mkdirSync("dist", { recursive: true });
 writeFileSync(
-  "index.html",
+  "dist/index.html",
   `<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>CONTENT.LAB</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Instrument+Serif&display=swap">
 <style>${css}</style></head><body><div id="root"></div>
@@ -22,4 +23,4 @@ writeFileSync(
 <script>${js}</script></body></html>
 `
 );
-console.log("index.html built");
+console.log("dist/index.html built");

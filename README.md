@@ -7,12 +7,11 @@
 
 ## Структура
 
-- `index.html` — собранное приложение, деплоится как статика.
 - `src/App.jsx`, `src/style.css` — исходники.
 
 ## Сборка
 
 ```bash
 npm install
-npm run build   # пересобирает index.html из src/
+npm run build   # собирает dist/index.html из src/ (Vercel делает это сам при каждом пуше в main)
 ```
